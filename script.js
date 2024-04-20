@@ -5,7 +5,7 @@ var largura = 10;
 
 function step(){
     ctx.fillStyle = 'white';
-    ctx.fillRect(0,0, 800, 600);
+    ctx.fillRect(0,0, 300, 600);
 
 
     ctx.fillStyle = 'lightblue';
