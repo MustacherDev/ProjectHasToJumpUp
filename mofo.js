@@ -5,7 +5,7 @@ function Mofo(x, y){
   this.rastro = [];
   this.rastroMax = 2000;
   this.stepSize = 4;
-  this.mofoSize = 3;
+  this.mofoSize = 5;
 
   // Mosca
   this.update = function(){
