@@ -6,8 +6,10 @@ var ctx = canvas.getContext('2d');
 function Ball(x, y){
   this.x = x;
   this.y = y;
+
   this.dx = 5;
   this.dy = -5;
+
   this.ballRadius = 10;
 
   this.draw = function () {
@@ -18,7 +20,7 @@ function Ball(x, y){
     ctx.closePath();
   }
 
-  this.update = function (plataforma) {
+  this.update = function (platformList) {
     // Verifica se a bola atingiu as paredes do canvas
     if (this.x + this.dx > canvas.width - this.ballRadius || this.x + this.dx < this.ballRadius) {
       this.dx = -this.dx; // Inverte a direção horizontal
@@ -27,11 +29,22 @@ function Ball(x, y){
       this.dy = -this.dy; // Inverte a direção vertical
     }
 
-    if (this.y + this.dy > plataforma.y - this.ballRadius && this.y + this.dy < plataforma.y + plataforma.height + this.ballRadius) {
-      // Verifica colisão com a plataforma
-        if (this.x > plataforma.x && this.x < plataforma.x + plataforma.width) {
-          this.dy = -this.dy;
-        }
+
+    for(var i = 0; i < platformList.length; i++){
+      var plataforma = platformList[i];
+      // Verifica colisão Horizontal com a plataforma
+      if (this.y + this.dy > plataforma.y - this.ballRadius && this.y + this.dy < plataforma.y + plataforma.height + this.ballRadius) {
+          if (this.x > plataforma.x && this.x < plataforma.x + plataforma.width) {
+            this.dy = -this.dy;
+          }
+      }
+
+      // Verifica colisão Vertical com a plataforma
+      if (this.x + this.dx > plataforma.x - this.ballRadius && this.x + this.dx < plataforma.x + plataforma.width + this.ballRadius) {
+          if (this.y > plataforma.y && this.y < plataforma.y + plataforma.height) {
+            this.dx = -this.dx;
+          }
+      }
     }
     this.x += this.dx;
     this.y += this.dy;
@@ -61,7 +74,7 @@ function Plataforma (x,y){
 }
 
 var mofo = new Mofo(canvas.width/2, canvas.height/2);
-var rectangle = new Plataforma ((canvas.width -100)/2,canvas.height -50);
+var rectangle = new Plataforma ((canvas.width -100)/2,canvas.height -100);
 var ball = new Ball(canvas.width/2,canvas.height -100);
 
 function step(){
@@ -72,7 +85,7 @@ function step(){
   rectangle.update();
   rectangle.draw();
 
-  ball.update(rectangle);
+  ball.update([rectangle]);
   ball.draw();
 
   requestAnimationFrame(step)
