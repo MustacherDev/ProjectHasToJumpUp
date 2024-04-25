@@ -36,6 +36,7 @@ function Ball(x, y){
       if (this.y + this.dy > plataforma.y - this.ballRadius && this.y + this.dy < plataforma.y + plataforma.height + this.ballRadius) {
           if (this.x > plataforma.x && this.x < plataforma.x + plataforma.width) {
             this.dy = -this.dy;
+            this.dx += plataforma.dx/10;
           }
       }
 
@@ -73,20 +74,32 @@ function Plataforma (x,y){
 
 }
 
-var mofo = new Mofo(canvas.width/2, canvas.height/2);
+var mofo = new Mofo(canvas.width/2, canvas.height/2, '#0095DD');
 var rectangle = new Plataforma ((canvas.width -100)/2,canvas.height -100);
 var ball = new Ball(canvas.width/2,canvas.height -100);
+
+
+
 
 function step(){
   // Fundo Branco
   ctx.fillStyle = 'white';
   ctx.fillRect(0,0, canvas.width, canvas.height);
 
+
+  mofo.x = ball.x;
+  mofo.y = ball.y;
+  mofo.update();
+  mofo.draw();
+
   rectangle.update();
   rectangle.draw();
 
+
   ball.update([rectangle]);
   ball.draw();
+
+
 
   requestAnimationFrame(step)
 }
