@@ -1,5 +1,4 @@
-var canvas = document.getElementById('Canvas');
-var ctx = canvas.getContext('2d');
+
 
 
 
@@ -65,11 +64,23 @@ function Plataforma (x,y){
   }
 
   this.update = function () {
-    if (this.x + this.dx > canvas.width - this.width || this.x + this.dx < 0) {
-      this.dx = -this.dx; // Inverte a direção horizontal
+
+
+    var dir = 0;
+
+
+    if(input.keyState[KeyCodes.KeyA][0]){
+      dir = -1;
     }
 
-    this.x += this.dx;
+    if(input.keyState[KeyCodes.KeyD][0]){
+      dir = 1;
+    }
+
+    if (!(this.x + this.dx*dir > canvas.width - this.width || this.x + this.dx*dir < 0)) {
+       this.x += dir*this.dx;
+    }
+
   }
 
 }
