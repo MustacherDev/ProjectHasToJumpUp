@@ -97,6 +97,7 @@ function step(){
   ctx.fillStyle = 'white';
   ctx.fillRect(0,0, canvas.width, canvas.height);
 
+  input.update();
 
   mofo.x = ball.x;
   mofo.y = ball.y;
