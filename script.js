@@ -46,6 +46,7 @@ function Ball(x, y){
           }
       }
     }
+
     this.x += this.dx;
     this.y += this.dy;
   }
@@ -57,6 +58,7 @@ function Plataforma (x,y){
   this.dx = 3;
   this.width = 100;
   this.height = 15;
+  this.dir = 0;
 
   this.draw = function(){
     ctx.fillStyle = '#000000';
@@ -65,20 +67,8 @@ function Plataforma (x,y){
 
   this.update = function () {
 
-
-    var dir = 0;
-
-
-    if(input.keyState[KeyCodes.KeyA][0]){
-      dir = -1;
-    }
-
-    if(input.keyState[KeyCodes.KeyD][0]){
-      dir = 1;
-    }
-
-    if (!(this.x + this.dx*dir > canvas.width - this.width || this.x + this.dx*dir < 0)) {
-       this.x += dir*this.dx;
+    if (!(this.x + this.dx*this.dir > canvas.width - this.width || this.x + this.dx*this.dir < 0)) {
+       this.x += this.dir*this.dx;
     }
 
   }
@@ -86,7 +76,8 @@ function Plataforma (x,y){
 }
 
 var mofo = new Mofo(canvas.width/2, canvas.height/2, '#0095DD');
-var rectangle = new Plataforma ((canvas.width -100)/2,canvas.height -100);
+var rectangle = new Plataforma((canvas.width -100)/2,canvas.height -100);
+var rectangle2 = new Plataforma((canvas.width -100)/2, 100);
 var ball = new Ball(canvas.width/2,canvas.height -100);
 
 
@@ -104,11 +95,32 @@ function step(){
   mofo.update();
   mofo.draw();
 
+
+  rectangle.dir = 0;
+  if(input.keyState[KeyCodes.KeyA][0]){
+    rectangle.dir = -1;
+  } else if(input.keyState[KeyCodes.KeyD][0]){
+    rectangle.dir = 1;
+  }
+
+  rectangle2.dir = 0;
+  if(input.keyState[KeyCodes.ArrowLeft][0]){
+    rectangle2.dir = -1;
+  } else if(input.keyState[KeyCodes.ArrowRight][0]){
+    rectangle2.dir = 1;
+  }
+
+
+
+
+
   rectangle.update();
   rectangle.draw();
+  rectangle2.update();
+  rectangle2.draw();
 
 
-  ball.update([rectangle]);
+  ball.update([rectangle, rectangle2]);
   ball.draw();
 
 
