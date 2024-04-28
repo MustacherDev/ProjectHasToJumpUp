@@ -55,7 +55,7 @@ function Ball(x, y){
 function Plataforma (x,y){
   this.x = x;
   this.y = y;
-  this.dx = 3;
+  this.dx = 7;
   this.width = 100;
   this.height = 15;
   this.dir = 0;
